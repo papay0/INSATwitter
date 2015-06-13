@@ -45,15 +45,13 @@ class TweetTableViewCell: UITableViewCell {
                 dispatch_async(dispatch_get_global_queue(qos, 0)) { () -> Void in
                     if let imageData = NSData(contentsOfURL: profileImageURL) {
                         dispatch_async(dispatch_get_main_queue(), {
-                                    tweetProfileImageView?.image = UIImage(data: imageData)
+                                    self.tweetProfileImageView?.image = UIImage(data: imageData)
+                                    self.tweetProfileImageView?.layer.cornerRadius = self.tweetProfileImageView.frame.size.width / 2
+                                    self.tweetProfileImageView?.clipsToBounds = true
                             }
                         )
                     }
-                }
-
-                if let imageData = NSData(contentsOfURL: profileImageURL) { // blocks main thread!
-                    tweetProfileImageView?.image = UIImage(data: imageData)
-                }
+                 }
             }
             
             /*
