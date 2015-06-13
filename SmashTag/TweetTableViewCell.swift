@@ -9,13 +9,13 @@
 import UIKit
 
 class TweetTableViewCell: UITableViewCell {
-
+    
     var tweet:Tweet?{
         didSet{
             updateUI()
         }
     }
-   
+    
     @IBOutlet weak var tweetProfileImageView: UIImageView!
     @IBOutlet weak var tweetScreenNameLabel: UILabel!
     @IBOutlet weak var tweetTextLabel: UILabel!
@@ -27,40 +27,66 @@ class TweetTableViewCell: UITableViewCell {
         tweetTextLabel?.attributedText = nil
         tweetScreenNameLabel?.text = nil
         tweetProfileImageView?.image = nil
-//        tweetCreatedLabel?.text = nil
+        //        tweetCreatedLabel?.text = nil
         
         // load new information from our tweet (if any)
         if let tweet = self.tweet
         {
             tweetTextLabel?.text = tweet.text
+            /*
             if tweetTextLabel?.text != nil  {
-                for _ in tweet.media {
+                for media in tweet.media {
+                    print(media)
                     tweetTextLabel.text! += " 📷"
                 }
             }
+            */
+            
+            
+            let attributedText: NSMutableAttributedString = NSMutableAttributedString(string: tweet.text)
+            
+            let hashtagAttrs = [NSForegroundColorAttributeName : UIColor.grayColor()]
+            for hashtag in tweet.hashtags {
+                attributedText.setAttributes(hashtagAttrs, range: hashtag.nsrange)
+            }
+            
+            let urlAttrs = [NSForegroundColorAttributeName: UIColor.blueColor()]
+            for url in tweet.urls {
+                attributedText.setAttributes(urlAttrs, range: url.nsrange)
+            }
+            
+            let userAttrs = [NSForegroundColorAttributeName: UIColor.brownColor()]
+            for user in tweet.userMentions {
+                attributedText.setAttributes(userAttrs, range: user.nsrange)
+            }
+            
+            tweetTextLabel?.attributedText = attributedText
+
             
             tweetScreenNameLabel?.text = "\(tweet.user)" // tweet.user.description
             
             
             if let profileImageURL = tweet.user.profileImageURL {
                 let colorForBorder = UIColor.blackColor()
-                let qos = Int(QOS_CLASS_USER_INITIATED.rawValue) // qos = quality of service (if it's slow, importante...)
+                let qos = Int(QOS_CLASS_USER_INITIATED.rawValue) // qos = quality of service (if it's slow, important...)
                 dispatch_async(dispatch_get_global_queue(qos, 0)) { () -> Void in
                     if let imageData = NSData(contentsOfURL: profileImageURL) {
                         dispatch_async(dispatch_get_main_queue(), {
-                            self.tweetProfileImageView?.image = UIImage(data: imageData)
-                            //self.tweetProfileImageView?.layer.cornerRadius = self.tweetProfileImageView.frame.size.width / 2
-                            self.tweetProfileImageView?.layer.cornerRadius = 10.0
-                            self.tweetProfileImageView?.clipsToBounds = true
-                            self.tweetProfileImageView?.layer.borderWidth = 3.0
-                            self.tweetProfileImageView?.layer.borderColor = colorForBorder.CGColor
+                            if let image = UIImage(data: imageData){
+                                self.tweetProfileImageView?.image = image
+                                //self.tweetProfileImageView?.layer.cornerRadius = self.tweetProfileImageView.frame.size.width / 2
+                                self.tweetProfileImageView?.layer.cornerRadius = 10.0
+                                self.tweetProfileImageView?.clipsToBounds = true
+                                self.tweetProfileImageView?.layer.borderWidth = 3.0
+                                self.tweetProfileImageView?.layer.borderColor = colorForBorder.CGColor
+                            }
                             }
                         )
                     }
                 }
             }
-    
-           let formatter = NSDateFormatter()
+            
+            let formatter = NSDateFormatter()
             if NSDate().timeIntervalSinceDate(tweet.created) > 24*60*60 {
                 formatter.dateStyle = NSDateFormatterStyle.ShortStyle
             } else {
@@ -70,6 +96,6 @@ class TweetTableViewCell: UITableViewCell {
         }
         
     }
-
+    
     
 }
