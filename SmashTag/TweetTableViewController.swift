@@ -12,9 +12,12 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
     
     
     var tweets = [[Tweet]]()
+    var countTweet : Int = 100
+    
     
     var searchText : String? = "#INSA" {
         didSet {
+            lastSuccessfulRequest = nil
             searchTextField?.text = searchText
             tweets.removeAll()
             tableView.reloadData()
@@ -22,24 +25,57 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate {
         }
     }
     
+    var lastSuccessfulRequest : TwitterRequest?
+    
+    
+    private var nextRequestToAttempt: TwitterRequest? {
+        if lastSuccessfulRequest == nil {
+            if searchText != nil {
+                return TwitterRequest(search: searchText!, count: countTweet)
+            } else {
+                return nil
+            }
+        } else {
+            return lastSuccessfulRequest!.requestForNewer
+        }
+    }
+    
+    
     func refresh(){
+        if refreshControl != nil {
+            refreshControl?.beginRefreshing()
+        }
+        refresh(refreshControl)
+        
+    }
+    
+    
+    @IBAction func refresh(sender: UIRefreshControl?) {
+        print("debug refreshing")
         if searchText != nil {
-            let request = TwitterRequest(search: searchText!, count: 100)
-            request.fetchTweets { (newTweets) -> Void in
-                dispatch_async(dispatch_get_main_queue()){  () -> Void in
-                    if newTweets.count > 0 {
-                        self.tweets.insert(newTweets, atIndex: 0)
-                        self.tableView.reloadData()
+            if let request = nextRequestToAttempt{
+                request.fetchTweets { (newTweets) -> Void in
+                    dispatch_async(dispatch_get_main_queue()){  () -> Void in
+                        print("before new tweet > 0")
+                        if newTweets.count > 0 {
+                            self.lastSuccessfulRequest = request
+                            self.tweets.insert(newTweets, atIndex: 0)
+                            self.tableView.reloadData()
+                        }
                     }
                 }
+            sender?.endRefreshing()
             }
-        }
+        } else {
+        sender?.endRefreshing()
+     }
 
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        tableView.estimatedRowHeight = tableView.rowHeight
+        tableView.rowHeight = UITableViewAutomaticDimension
         refresh()
     }
     
