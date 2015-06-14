@@ -21,7 +21,7 @@
                             <textInputTraits key="textInputTraits" returnKeyType="search" enablesReturnKeyAutomatically="YES"/>
                         </textField>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Tweet" rowHeight="149" id="Ubp-CW-UQn" customClass="TweetTableViewCell" customModule="INSATwitter" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="Tweet" rowHeight="149" id="Ubp-CW-UQn" customClass="TweetTableViewCell" customModule="INSATwitter" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="116" width="600" height="149"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ubp-CW-UQn" id="hhC-NQ-EKv">
