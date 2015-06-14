@@ -8,25 +8,64 @@
 
 import UIKit
 
+protocol TweetTableViewCellDelegate  {
+    func updateTweetHashTag(TweetTableViewCell)
+//    func isOff(cell: CustomTableViewCell)
+}
+
 class TweetTableViewCell: UITableViewCell, UITextViewDelegate {
+    
+    var delegate : TweetTableViewCellDelegate?
     
     var tweet:Tweet?{
         didSet{
+            print("I update my cell !")
             updateUI()
+
         }
     }
     
+    var newHashTagInCell : String?
+    
+    
     func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
-        print("I click")
-        return false
+    
+       // let tweetTableView = TweetTableViewController()
+        
+        let application:UIApplication = UIApplication.sharedApplication()
+        if application.canOpenURL(URL){
+            print("It's a valid URL")
+        } else {
+            print("ERROR URL no valid")
+            //tweetTableView.searchText = URL.absoluteString
+            newHashTagInCell = URL.absoluteString
+            delegate?.updateTweetHashTag(self)
+        }
+        return true
     }
     
+    
+    /*
+    func textView(textView: UITextView, shouldInteractWithTextAttachment textAttachment: NSTextAttachment, inRange characterRange: NSRange) -> Bool {
+        print("haha")
+        return true
+    }
+    */
+    
+    private func openURLWithSafari(urlString: String) {
+        if let url = NSURL(string: urlString) {
+            UIApplication.sharedApplication().openURL(url)
+        }
+    }
+    
+
     
     @IBOutlet weak var tweetProfileImageView: UIImageView!
     @IBOutlet weak var tweetScreenNameLabel: UILabel!
     @IBOutlet weak var tweetTextLabel: UILabel!
     @IBOutlet weak var tweetCreatedLabel: UILabel!
     
+    @IBOutlet weak var tweetTextView: UITextView!
     
     func updateUI() {
         // reset any existing tweet information
@@ -38,7 +77,9 @@ class TweetTableViewCell: UITableViewCell, UITextViewDelegate {
         // load new information from our tweet (if any)
         if let tweet = self.tweet
         {
-            tweetTextLabel?.text = tweet.text
+            //tweetTextLabel?.text = tweet.text
+            tweetTextView?.text = tweet.text
+            tweetTextView?.delegate = self
             /*
             if tweetTextLabel?.text != nil  {
                 for media in tweet.media {
@@ -71,7 +112,8 @@ class TweetTableViewCell: UITableViewCell, UITextViewDelegate {
                 attributedText.setAttributes(userAttrs, range: user.nsrange)
             }
             
-            tweetTextLabel?.attributedText = attributedText
+          //  tweetTextLabel?.attributedText = attributedText
+            tweetTextView?.attributedText = attributedText
 
             
             tweetScreenNameLabel?.text = "\(tweet.user)" // tweet.user.description

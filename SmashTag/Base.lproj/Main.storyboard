@@ -41,46 +41,41 @@
                                                 <constraint firstAttribute="width" constant="48" id="ccD-sc-swd"/>
                                             </constraints>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Tweet" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wSZ-Hs-Irs">
-                                            <rect key="frame" x="64" y="36" width="528" height="104.5"/>
-                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="5" translatesAutoresizingMaskIntoConstraints="NO" id="4Wv-XQ-6Jz">
                                             <rect key="frame" x="11" y="64" width="42" height="12"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="10"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="249" scrollEnabled="NO" editable="NO" text="Tweet" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="wmv-BA-jJn">
+                                            <rect key="frame" x="71" y="28" width="521" height="112.5"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                            <dataDetectorType key="dataDetectorTypes" link="YES"/>
+                                        </textView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="wSZ-Hs-Irs" firstAttribute="top" secondItem="9WX-LN-jdn" secondAttribute="bottom" constant="8.5" id="0Iw-kP-bqe"/>
                                         <constraint firstAttribute="bottomMargin" relation="greaterThanOrEqual" secondItem="4Wv-XQ-6Jz" secondAttribute="bottom" id="4zd-cb-U7e"/>
                                         <constraint firstAttribute="leadingMargin" secondItem="kGr-Ry-rAh" secondAttribute="leading" id="5Ah-JP-bFd"/>
                                         <constraint firstItem="9WX-LN-jdn" firstAttribute="leading" secondItem="kGr-Ry-rAh" secondAttribute="trailing" constant="8" id="7M0-Lj-m1N"/>
-                                        <constraint firstItem="wSZ-Hs-Irs" firstAttribute="leading" secondItem="9WX-LN-jdn" secondAttribute="leading" id="Ii3-kd-2QE"/>
                                         <constraint firstItem="4Wv-XQ-6Jz" firstAttribute="top" secondItem="kGr-Ry-rAh" secondAttribute="bottom" constant="8" id="KD2-MD-04U"/>
                                         <constraint firstAttribute="topMargin" secondItem="kGr-Ry-rAh" secondAttribute="top" id="MuV-c8-2ih"/>
-                                        <constraint firstItem="wSZ-Hs-Irs" firstAttribute="leading" secondItem="4Wv-XQ-6Jz" secondAttribute="trailing" constant="11" id="UBP-9S-Lho"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="wmv-BA-jJn" secondAttribute="bottom" id="Pj1-MG-wJu"/>
+                                        <constraint firstItem="wmv-BA-jJn" firstAttribute="leading" secondItem="hhC-NQ-EKv" secondAttribute="leadingMargin" constant="63" id="VUH-jf-We0"/>
+                                        <constraint firstItem="wmv-BA-jJn" firstAttribute="top" secondItem="9WX-LN-jdn" secondAttribute="bottom" constant="0.5" id="XRe-ob-dci"/>
+                                        <constraint firstItem="wmv-BA-jJn" firstAttribute="leading" secondItem="4Wv-XQ-6Jz" secondAttribute="trailing" constant="18" id="ePs-qn-4t0"/>
                                         <constraint firstAttribute="topMargin" secondItem="9WX-LN-jdn" secondAttribute="top" id="erz-aF-9rM"/>
-                                        <constraint firstItem="wSZ-Hs-Irs" firstAttribute="top" secondItem="9WX-LN-jdn" secondAttribute="top" id="ewj-zN-S65"/>
-                                        <constraint firstAttribute="trailingMargin" secondItem="wSZ-Hs-Irs" secondAttribute="trailing" id="jPA-5d-Meo"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="9WX-LN-jdn" secondAttribute="trailing" id="pvk-2A-HJS"/>
-                                        <constraint firstAttribute="bottomMargin" secondItem="wSZ-Hs-Irs" secondAttribute="bottom" id="zgd-cA-SJq"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="wmv-BA-jJn" secondAttribute="trailing" id="qYC-J2-Hxh"/>
                                         <constraint firstItem="4Wv-XQ-6Jz" firstAttribute="leading" secondItem="hhC-NQ-EKv" secondAttribute="leadingMargin" constant="3" id="zi6-vh-iNp"/>
                                     </constraints>
-                                    <variation key="default">
-                                        <mask key="constraints">
-                                            <exclude reference="ewj-zN-S65"/>
-                                        </mask>
-                                    </variation>
                                 </tableViewCellContentView>
                                 <connections>
                                     <outlet property="tweetCreatedLabel" destination="4Wv-XQ-6Jz" id="ug2-pK-0KK"/>
                                     <outlet property="tweetProfileImageView" destination="kGr-Ry-rAh" id="saf-Yd-1C8"/>
                                     <outlet property="tweetScreenNameLabel" destination="9WX-LN-jdn" id="LpJ-gW-a4k"/>
-                                    <outlet property="tweetTextLabel" destination="wSZ-Hs-Irs" id="lqk-0T-Tty"/>
+                                    <outlet property="tweetTextView" destination="wmv-BA-jJn" id="FPI-Xw-mOj"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
