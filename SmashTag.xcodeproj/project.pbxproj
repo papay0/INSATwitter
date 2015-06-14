@@ -435,6 +435,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = SmashTag/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = INSA.SmashTag;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -446,6 +447,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = SmashTag/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = INSA.SmashTag;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -519,6 +521,7 @@
 				254D17841B2CBFC100065D66 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		254D17851B2CBFC100065D66 /* Build configuration list for PBXNativeTarget "SmashTagTests" */ = {
 			isa = XCConfigurationList;
@@ -527,6 +530,7 @@
 				254D17871B2CBFC100065D66 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		254D17881B2CBFC100065D66 /* Build configuration list for PBXNativeTarget "SmashTagUITests" */ = {
 			isa = XCConfigurationList;
@@ -535,6 +539,7 @@
 				254D178A1B2CBFC100065D66 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

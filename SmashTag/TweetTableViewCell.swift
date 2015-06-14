@@ -8,13 +8,19 @@
 
 import UIKit
 
-class TweetTableViewCell: UITableViewCell {
+class TweetTableViewCell: UITableViewCell, UITextViewDelegate {
     
     var tweet:Tweet?{
         didSet{
             updateUI()
         }
     }
+    
+    func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
+        print("I click")
+        return false
+    }
+    
     
     @IBOutlet weak var tweetProfileImageView: UIImageView!
     @IBOutlet weak var tweetScreenNameLabel: UILabel!
@@ -47,7 +53,12 @@ class TweetTableViewCell: UITableViewCell {
             
             let hashtagAttrs = [NSForegroundColorAttributeName : UIColor.grayColor()]
             for hashtag in tweet.hashtags {
+                let hashtagLinksAttrs = [NSLinkAttributeName : hashtag.keyword]
                 attributedText.setAttributes(hashtagAttrs, range: hashtag.nsrange)
+                attributedText.setAttributes(hashtagLinksAttrs, range: hashtag.nsrange)
+                
+
+//                print("\(hashtag) ==> \(hashtag.nsrange)")
             }
             
             let urlAttrs = [NSForegroundColorAttributeName: UIColor.blueColor()]
