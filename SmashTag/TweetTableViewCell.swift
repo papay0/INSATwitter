@@ -8,9 +8,8 @@
 
 import UIKit
 
-protocol TweetTableViewCellDelegate  {
+protocol TweetTableViewCellDelegate  { // my delegate
     func updateTweetHashTag(TweetTableViewCell)
-//    func isOff(cell: CustomTableViewCell)
 }
 
 class TweetTableViewCell: UITableViewCell, UITextViewDelegate {
@@ -19,38 +18,17 @@ class TweetTableViewCell: UITableViewCell, UITextViewDelegate {
     
     var tweet:Tweet?{
         didSet{
-            print("I update my cell !")
             updateUI()
-
         }
     }
     
     var newHashTagInCell : String?
     
-    
     func textView(textView: UITextView, shouldInteractWithURL URL: NSURL, inRange characterRange: NSRange) -> Bool {
-    
-       // let tweetTableView = TweetTableViewController()
-        
-        let application:UIApplication = UIApplication.sharedApplication()
-        if application.canOpenURL(URL){
-            print("It's a valid URL")
-        } else {
-            print("ERROR URL no valid")
-            //tweetTableView.searchText = URL.absoluteString
             newHashTagInCell = URL.absoluteString
             delegate?.updateTweetHashTag(self)
-        }
         return true
     }
-    
-    
-    /*
-    func textView(textView: UITextView, shouldInteractWithTextAttachment textAttachment: NSTextAttachment, inRange characterRange: NSRange) -> Bool {
-        print("haha")
-        return true
-    }
-    */
     
     private func openURLWithSafari(urlString: String) {
         if let url = NSURL(string: urlString) {
@@ -58,7 +36,6 @@ class TweetTableViewCell: UITableViewCell, UITextViewDelegate {
         }
     }
     
-
     
     @IBOutlet weak var tweetProfileImageView: UIImageView!
     @IBOutlet weak var tweetScreenNameLabel: UILabel!
@@ -68,27 +45,14 @@ class TweetTableViewCell: UITableViewCell, UITextViewDelegate {
     @IBOutlet weak var tweetTextView: UITextView!
     
     func updateUI() {
-        // reset any existing tweet information
         tweetTextLabel?.attributedText = nil
         tweetScreenNameLabel?.text = nil
         tweetProfileImageView?.image = nil
-        //        tweetCreatedLabel?.text = nil
         
-        // load new information from our tweet (if any)
         if let tweet = self.tweet
         {
-            //tweetTextLabel?.text = tweet.text
             tweetTextView?.text = tweet.text
             tweetTextView?.delegate = self
-            /*
-            if tweetTextLabel?.text != nil  {
-                for media in tweet.media {
-                    print(media)
-                    tweetTextLabel.text! += " 📷"
-                }
-            }
-            */
-            
             
             let attributedText: NSMutableAttributedString = NSMutableAttributedString(string: tweet.text)
             
@@ -97,9 +61,6 @@ class TweetTableViewCell: UITableViewCell, UITextViewDelegate {
                 let hashtagLinksAttrs = [NSLinkAttributeName : hashtag.keyword]
                 attributedText.setAttributes(hashtagAttrs, range: hashtag.nsrange)
                 attributedText.setAttributes(hashtagLinksAttrs, range: hashtag.nsrange)
-                
-
-//                print("\(hashtag) ==> \(hashtag.nsrange)")
             }
             
             let urlAttrs = [NSForegroundColorAttributeName: UIColor.blueColor()]
@@ -112,11 +73,10 @@ class TweetTableViewCell: UITableViewCell, UITextViewDelegate {
                 attributedText.setAttributes(userAttrs, range: user.nsrange)
             }
             
-          //  tweetTextLabel?.attributedText = attributedText
             tweetTextView?.attributedText = attributedText
-
             
-            tweetScreenNameLabel?.text = "\(tweet.user)" // tweet.user.description
+            
+            tweetScreenNameLabel?.text = "\(tweet.user)" 
             
             
             if let profileImageURL = tweet.user.profileImageURL {

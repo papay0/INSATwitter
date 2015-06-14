@@ -11,30 +11,24 @@ import UIKit
 class TweetTableViewController: UITableViewController, UITextFieldDelegate, TweetTableViewCellDelegate {
     
     
-    var tweets = [[Tweet]](){
-        didSet{
-            //print("TWEET SET \(tweets)")
-        }
-    }
+    var tweets = [[Tweet]]()
+    
     let countTweet : Int = 100
     
     static var tweetTableView : UITableView?
     
     var searchText : String? = "#INSA" {
         didSet {
-            print("I set my search Text with \(searchText)")
             lastSuccessfulRequest = nil
             searchTextField?.text = searchText
             tweets.removeAll()
             refresh()
-            print("tweets = \(tweets)")
             tableView.reloadData()
         }
     }
     
     @IBOutlet weak var searchTextField: UITextField!{
         didSet{
-            print("I set my searchTextFiled")
             searchTextField.delegate = self
             searchTextField.text = searchText
         }
@@ -46,7 +40,6 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate, Twee
     private var nextRequestToAttempt: TwitterRequest? {
         if lastSuccessfulRequest == nil {
             if searchText != nil {
-                print("I made a request with \(searchText) keyword")
                 return TwitterRequest(search: searchText!, count: countTweet)
             } else {
                 return nil
@@ -72,27 +65,22 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate, Twee
                 request.fetchTweets { (newTweets) -> Void in
                     dispatch_async(dispatch_get_main_queue()){  () -> Void in
                         if newTweets.count > 0 {
-                           // print("I WANT NEW TWEET")
                             self.lastSuccessfulRequest = request
                             self.tweets.insert(newTweets, atIndex: 0)
-                            //print("new tweet \(newTweets)")
-                           // print("tweets in refresh = \(self.tweets)")
                             self.tableView.reloadData()
                         }
                         sender?.endRefreshing()
                     }
                 }
-//            sender?.endRefreshing()
             }
-                    } else {
-        sender?.endRefreshing()
-     }
-
+        } else {
+            sender?.endRefreshing()
+        }
+        
     }
     
     func updateTweetHashTag(cell: TweetTableViewCell){
         let newHashTag = cell.newHashTagInCell
-        print("My New hashtag is : \(newHashTag)")
         searchText = newHashTag
     }
     
@@ -102,17 +90,6 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate, Twee
         tableView.rowHeight = UITableViewAutomaticDimension
         refresh()
     }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let identifier = segue.identifier {
-            switch identifier {
-            case "updateHashTag":
-                print("I UPDATE!! segue")
-            default: break
-            }
-        }
-    }
-
     
     
     // Uncomment the following line to preserve selection between presentations
@@ -144,11 +121,10 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate, Twee
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(Storyboard.CellReuseIdentifier, forIndexPath: indexPath) as! TweetTableViewCell
-
+        
         cell.tweet = tweets[indexPath.section][indexPath.row]
-      //  print("I am in tableView for CELL and \(cell.tweet)")
         cell.delegate = self
-    
+        
         return cell
     }
     
@@ -160,7 +136,7 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate, Twee
         return true
     }
     
-  
+    
     
     /*
     // Override to support conditional editing of the table view.
