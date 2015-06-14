@@ -128,13 +128,15 @@ class TweetTableViewController: UITableViewController, UITextFieldDelegate, Twee
         return cell
     }
     
+    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         if textField == searchTextField {
-            textField.resignFirstResponder()
-            searchText = textField.text
+            searchTextField.resignFirstResponder()
+            searchText = searchTextField.text
         }
         return true
     }
+
     
     
     
